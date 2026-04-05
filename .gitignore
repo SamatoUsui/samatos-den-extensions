@@ -1,0 +1,16 @@
+.gradle/
+.kotlin/
+build/
+local.properties
+*.apk
+*.aar
+*.ap_
+compare-animeonsen.apk
+
+extension/build/
+manga-extension/build/
+
+aniyomi-extensions-lib/
+keiyoushi-extensions-lib/
+keiyoushi-extensions-source/
+sec-aniyomi-ext/
