@@ -4,7 +4,6 @@ import android.text.Html
 import android.util.Base64
 import eu.kanade.tachiyomi.animesource.AnimeSourceFactory
 import eu.kanade.tachiyomi.animesource.model.AnimeFilterList
-import eu.kanade.tachiyomi.animesource.model.AnimeUpdateStrategy
 import eu.kanade.tachiyomi.animesource.model.AnimesPage
 import eu.kanade.tachiyomi.animesource.model.SAnime
 import eu.kanade.tachiyomi.animesource.model.SEpisode
@@ -25,7 +24,7 @@ class SamatoDenFactory : AnimeSourceFactory {
 
 class SamatoDen : AnimeHttpSource() {
 
-    override val name = "Samato's Den"
+    override val name = "Samato's Den: Videos"
     override val baseUrl = "https://samatoden.blogspot.com"
     override val lang = "es"
     override val supportsLatest = true
@@ -128,7 +127,6 @@ class SamatoDen : AnimeHttpSource() {
         anime.genre = extractCategories(entry).joinToString(", ").ifBlank { null }
         anime.status = SAnime.COMPLETED
         anime.thumbnail_url = extractThumbnail(entry, html)
-        anime.update_strategy = AnimeUpdateStrategy.ONLY_FETCH_ONCE
         anime.initialized = true
         return anime
     }

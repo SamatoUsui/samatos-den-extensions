@@ -5,14 +5,14 @@ plugins {
 
 android {
     namespace = "eu.kanade.tachiyomi.animeextension.es.samatoden"
-    compileSdk = 36
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "eu.kanade.tachiyomi.animeextension.es.samatoden"
         minSdk = 21
         targetSdk = 34
-        versionCode = 1
-        versionName = "14.1"
+        versionCode = 2
+        versionName = "14.2"
     }
 
     buildTypes {

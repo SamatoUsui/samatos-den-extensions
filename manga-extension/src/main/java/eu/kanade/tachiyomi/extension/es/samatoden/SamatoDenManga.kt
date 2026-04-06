@@ -24,10 +24,11 @@ class SamatoDenMangaFactory : SourceFactory {
 
 class SamatoDenManga : HttpSource() {
 
-    override val name = "Samato's Den"
+    override val name = "Samato's Den: Comics"
     override val baseUrl = "https://samatoden.blogspot.com"
     override val lang = "es"
     override val supportsLatest = true
+    override val versionId = 1
 
     override fun headersBuilder(): Headers.Builder = super.headersBuilder()
         .add("Referer", "$baseUrl/")

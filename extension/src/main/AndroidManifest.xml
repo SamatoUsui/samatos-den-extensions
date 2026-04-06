@@ -6,7 +6,7 @@
     <application
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
-        android:label="Aniyomi: Samato's Den">
+        android:label="Aniyomi: Samato's Den: Videos">
 
         <meta-data
             android:name="tachiyomi.animeextension.class"
@@ -19,7 +19,7 @@
             android:value="1" />
         <meta-data
             android:name="tachiyomi.animeextension.names"
-            android:value="Samato's Den" />
+            android:value="Samato's Den: Videos" />
 
     </application>
 

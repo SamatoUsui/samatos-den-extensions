@@ -11,8 +11,8 @@ android {
         applicationId = "eu.kanade.tachiyomi.extension.es.samatoden"
         minSdk = 21
         targetSdk = 34
-        versionCode = 1
-        versionName = "1.4.1"
+        versionCode = 3
+        versionName = "1.4.3"
     }
 
     buildTypes {
