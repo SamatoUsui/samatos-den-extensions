@@ -75,7 +75,7 @@ class SamatoDenManga : HttpSource() {
     private fun feedUrl(page: Int, query: String = ""): String {
         val startIndex = ((page - 1) * PAGE_SIZE) + 1
         val queryPart = if (query.isBlank()) "" else "&q=${query.urlEncode()}"
-        return "$baseUrl/feeds/posts/default/-/comics?alt=json&max-results=$PAGE_SIZE&start-index=$startIndex$queryPart"
+        return "$baseUrl/feeds/posts/default?alt=json&max-results=$PAGE_SIZE&start-index=$startIndex$queryPart"
     }
 
     private fun parseFeedPage(json: String): MangasPage {
@@ -84,7 +84,10 @@ class SamatoDenManga : HttpSource() {
         val entries = feed.optJSONArray("entry") ?: JSONArray()
         val mangaList = buildList(entries.length()) {
             for (index in 0 until entries.length()) {
-                add(entryToManga(entries.getJSONObject(index)))
+                val entry = entries.getJSONObject(index)
+                if (isComicEntry(entry)) {
+                    add(entryToManga(entry))
+                }
             }
         }
 
@@ -107,6 +110,15 @@ class SamatoDenManga : HttpSource() {
         }
 
         error("No se encontro ninguna entrada de comic en la respuesta de Blogger")
+    }
+
+    private fun isComicEntry(entry: JSONObject): Boolean {
+        val html = entry.optJSONObject("content")?.optString("\$t").orEmpty()
+        return html.contains("comic-reader", ignoreCase = true) ||
+            html.contains("comic-strip", ignoreCase = true) ||
+            html.contains("generatePages(", ignoreCase = true) ||
+            html.contains("const pages =", ignoreCase = true) ||
+            html.contains("const chapters =", ignoreCase = true)
     }
 
     private fun entryToManga(entry: JSONObject): SManga {

@@ -86,7 +86,7 @@ class SamatoDen : AnimeHttpSource() {
         } else {
             "&q=${query.urlEncode()}"
         }
-        return "$baseUrl/feeds/posts/default/-/videos?alt=json&max-results=$PAGE_SIZE&start-index=$startIndex$queryPart"
+        return "$baseUrl/feeds/posts/default?alt=json&max-results=$PAGE_SIZE&start-index=$startIndex$queryPart"
     }
 
     private fun parseFeedPage(json: String): AnimesPage {
@@ -95,7 +95,10 @@ class SamatoDen : AnimeHttpSource() {
         val entries = feed.optJSONArray("entry") ?: JSONArray()
         val animeList = buildList(entries.length()) {
             for (index in 0 until entries.length()) {
-                add(entryToAnime(entries.getJSONObject(index)))
+                val entry = entries.getJSONObject(index)
+                if (isVideoEntry(entry)) {
+                    add(entryToAnime(entry))
+                }
             }
         }
 
@@ -133,6 +136,12 @@ class SamatoDen : AnimeHttpSource() {
         anime.thumbnail_url = extractThumbnail(entry, html)
         anime.initialized = true
         return anime
+    }
+
+    private fun isVideoEntry(entry: JSONObject): Boolean {
+        val html = entry.optJSONObject("content")?.optString("\$t").orEmpty()
+        if (!html.contains("jwplayer", ignoreCase = true)) return false
+        return SINGLE_FILE_REGEX.containsMatchIn(html) || html.contains("playlist", ignoreCase = true)
     }
 
     private fun entryToEpisodes(entry: JSONObject): List<SEpisode> {
